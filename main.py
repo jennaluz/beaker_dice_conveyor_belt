@@ -1,5 +1,4 @@
 import sys
-import time
 
 sys.path.append('../fanuc_ethernet_ip_drivers/src')
 from robot_controller import robot
@@ -12,7 +11,9 @@ positions = [[618, -5, -50, 179, 1.5, 31],      # 0: Start
              [932, 645.5, -181, 179, 1.5, 31],  # 3: CB Start Die Release
              [155, 649.5, -30, 179, 1.5, 31],   # 4: CB End
              [155, 649.5, -181, 179, 1.5, 31],  # 5: CB End Die Grap
-             [618, -5, -174, 179, 1.5, 31]      # 6: End
+             [618, -5, -174, 179, 1.5, 120],    # 6: End Rotated
+             [618, -5, -150, 179, 1.5, 120],    # 7: End Released
+             [618, -5, -150, 179, 1.5, 31],     # 8: End Un-rotated
             ]
 
 def main():
@@ -51,8 +52,8 @@ def main():
         # Move to the end position
         crx10.write_cartesian_position(positions[6])
         crx10.schunk_gripper('open')
-
-        time.sleep(1)
+        crx10.write_cartesian_position(positions[7])
+        crx10.write_cartesian_position(positions[8])
 
 
 if __name__ == '__main__':
